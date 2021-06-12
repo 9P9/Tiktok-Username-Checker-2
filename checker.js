@@ -6,7 +6,7 @@ const prompt = require('prompt');
 const UserAgent = require(`user-agents`);
 const fs = require('fs');
 const proxies = fs.readFileSync('./extra/proxies.txt', 'utf-8').replace(/\r/gi, '').split('\n');
-const usernames = [...new Set(require('fs').readFileSync('usernames.txt', 'utf-8').replace(/\r/g, '').split('\n'))];
+const usernames = [...new Set(fs.readFileSync('usernames.txt', 'utf-8').replace(/\r/g, '').split('\n'))];
 const config = require("./extra/config.json");
 
 process.on('uncaughtException', e => {});
