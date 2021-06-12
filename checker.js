@@ -28,7 +28,7 @@ function pcheck(username) {
     var proxy = proxies[Math.floor(Math.random() * proxies.length)];
     var agent = new ProxyAgent(`${config.proxyType}://` + proxy);
     request({
-        method: "GET",
+        method: "HEAD",
         url: `https://www.tiktok.com/@${username}`,
 		agent,
 		headers: { 
@@ -42,16 +42,10 @@ function pcheck(username) {
 		else{
 			switch(res.statusCode){
 				case 200: 
-						if(body.includes("verify")){ 
-							//console.log(chalk.hex("9370DB")(`[${chalk.white('VERIFY_PAGE')}] (%s/%s/%s) [${chalk.white('VERIFY')}] Username: %s | Proxy: %s`), available, checked, usernames.length, username, proxy);
-							retries++;
-							pcheck(username); 
-						}
-						else{
-							unavailable++;
-							console.log(chalk.red(`[${chalk.white('%s')}] (%s/%s/%s) [${chalk.white('Unavailable')}] Username: %s | Proxy: %s`), res.statusCode, available, checked, usernames.length, username, proxy);
-							write(username + "\n", "usernames/unavailable.txt");
-						}
+						unavailable++;
+						console.log(chalk.red(`[${chalk.white('%s')}] (%s/%s/%s) [${chalk.white('Unavailable')}] Username: %s | Proxy: %s`), res.statusCode, available, checked, usernames.length, username, proxy);
+						write(username + "\n", "usernames/unavailable.txt");
+						
 						break; 
 				case 404: 
 						available++;
@@ -77,7 +71,7 @@ function check(username) {
 	var userAgent = new UserAgent();
     var proxy = proxies[Math.floor(Math.random() * proxies.length)];
     request({
-        method: "GET",
+        method: "HEAD",
         url: `https://www.tiktok.com/@${username}`,
 		headers: { 
 			'User-Agent': userAgent.toString(),
